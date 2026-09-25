@@ -1,0 +1,48 @@
+package com.example.mobileappdevelopmentvar8.ui.viewModel
+
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.mobileappdevelopmentvar8.data.RetrofitClient
+import com.example.mobileappdevelopmentvar8.data.model.product.Product
+import kotlinx.coroutines.launch
+
+class ProductViewModel : ViewModel() {
+    fun getProduct() {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitClient.productsApiService.getProduct()
+
+                Log.d(
+                    "ProductLog(ДО)",
+                    "ID: ${response.id} | " +
+                            "Название: ${response.title} | " +
+                            "Описание: ${response.description} | " +
+                            "Категория: ${response.category} | " +
+                            "Тэги: ${response.tags}"
+                )
+            } catch (e: Exception) {
+                Log.e("RetrofitError", e.message.toString())
+            }
+        }
+    }
+
+    fun updateProduct(product: Product) {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitClient.productsApiService.updateProduct(product)
+
+                Log.d(
+                    "ProductLog(ПОСЛЕ)",
+                    "ID: ${response.id} | " +
+                            "Название: ${response.title} | " +
+                            "Описание: ${response.description} | " +
+                            "Категория: ${response.category} | " +
+                            "Тэги: ${response.tags}"
+                )
+            } catch (e: Exception) {
+                Log.e("RetrofitError", e.message.toString())
+            }
+        }
+    }
+}

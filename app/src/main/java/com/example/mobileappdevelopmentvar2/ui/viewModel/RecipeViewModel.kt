@@ -10,7 +10,7 @@ class RecipeViewModel : ViewModel() {
     fun fetchRecipe() {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.apiService.getRecipes()
+                val response = RetrofitClient.recipesApiService.getRecipes()
 
                 for (recipe in response.recipes) {
                     Log.d(

@@ -11,7 +11,7 @@ class UserViewModel : ViewModel() {
     fun addUser(user: User) {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.apiService.createUser(user)
+                val response = RetrofitClient.usersApiService.createUser(user)
 
                 Log.d(
                     "UserLog",

@@ -1,5 +1,8 @@
 package com.example.mobileappdevelopmentvar8.data
 
+import com.example.mobileappdevelopmentvar8.data.service.ProductsApiService
+import com.example.mobileappdevelopmentvar8.data.service.RecipesApiService
+import com.example.mobileappdevelopmentvar8.data.service.UsersApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -24,8 +27,16 @@ object RetrofitClient {
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-    val apiService: ApiService by lazy {
-        retrofitClient
-            .create(ApiService::class.java)
+
+    val recipesApiService: RecipesApiService by lazy {
+        retrofitClient.create(RecipesApiService::class.java)
+    }
+
+    val usersApiService: UsersApiService by lazy {
+        retrofitClient.create(UsersApiService::class.java)
+    }
+
+    val productsApiService: ProductsApiService by lazy {
+        retrofitClient.create(ProductsApiService::class.java)
     }
 }
