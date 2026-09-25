@@ -13,7 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.mobileappdevelopmentvar8.data.model.product.Product
+import com.example.mobileappdevelopmentvar8.data.model.Product
 import com.example.mobileappdevelopmentvar8.ui.theme.MobileAppDevelopmentVar8Theme
 import com.example.mobileappdevelopmentvar8.ui.viewModel.ProductViewModel
 

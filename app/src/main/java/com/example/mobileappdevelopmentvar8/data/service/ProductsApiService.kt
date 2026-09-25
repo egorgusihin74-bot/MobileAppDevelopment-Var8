@@ -1,6 +1,6 @@
 package com.example.mobileappdevelopmentvar8.data.service
 
-import com.example.mobileappdevelopmentvar8.data.model.product.Product
+import com.example.mobileappdevelopmentvar8.data.model.Product
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT

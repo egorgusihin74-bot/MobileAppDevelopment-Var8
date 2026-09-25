@@ -1,4 +1,4 @@
-package com.example.mobileappdevelopmentvar8.data.model.product
+package com.example.mobileappdevelopmentvar8.data.model
 
 data class Product(
     val id: Int? = null,

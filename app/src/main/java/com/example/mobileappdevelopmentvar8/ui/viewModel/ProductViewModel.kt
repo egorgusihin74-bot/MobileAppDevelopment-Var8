@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobileappdevelopmentvar8.data.RetrofitClient
-import com.example.mobileappdevelopmentvar8.data.model.product.Product
+import com.example.mobileappdevelopmentvar8.data.model.Product
 import kotlinx.coroutines.launch
 
 class ProductViewModel : ViewModel() {
