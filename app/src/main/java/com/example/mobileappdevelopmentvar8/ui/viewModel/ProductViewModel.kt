@@ -14,7 +14,7 @@ class ProductViewModel : ViewModel() {
                 val response = RetrofitClient.productsApiService.getProduct()
 
                 Log.d(
-                    "ProductLog(ДО)",
+                    "До редактирования:",
                     "ID: ${response.id} | " +
                             "Название: ${response.title} | " +
                             "Описание: ${response.description} | " +
@@ -33,7 +33,7 @@ class ProductViewModel : ViewModel() {
                 val response = RetrofitClient.productsApiService.updateProduct(product)
 
                 Log.d(
-                    "ProductLog(ПОСЛЕ)",
+                    "После редактирования:",
                     "ID: ${response.id} | " +
                             "Название: ${response.title} | " +
                             "Описание: ${response.description} | " +
