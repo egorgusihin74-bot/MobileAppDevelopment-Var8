@@ -17,7 +17,7 @@ class RecipeViewModel : ViewModel() {
                         "RetrofitLog",
                         "ID: ${recipe.id} | " +
                                 "Название: ${recipe.name} | " +
-                                "Ингредиенты: ${recipe.ingredients.joinToString(", ")} | " +
+                                "Ингредиенты: ${recipe.ingredients?.joinToString(", ") ?: ""} | " +
                                 "Калории: ${recipe.caloriesPerServing}"
                     )
                 }
