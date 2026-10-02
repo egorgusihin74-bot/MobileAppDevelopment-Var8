@@ -4,12 +4,15 @@ import com.example.mobileappdevelopmentvar8.data.service.ProductsApiService
 import com.example.mobileappdevelopmentvar8.data.service.RecipeDeleteApiService
 import com.example.mobileappdevelopmentvar8.data.service.RecipesApiService
 import com.example.mobileappdevelopmentvar8.data.service.UsersApiService
+import okhttp3.Dns
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Proxy
+import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -18,9 +21,20 @@ object RetrofitClient {
 
     val proxy = Proxy(Proxy.Type.HTTP, InetSocketAddress("10.207.106.59", 3128))
 
+    // DNS для использования только IPv4
+    val dns = Dns { hostname ->
+        InetAddress.getAllByName(hostname).filter {
+            it.address.size == 4 // Только IPv4 адреса
+        }
+    }
+
     val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
+        .dns(dns)
         //.proxy(proxy)
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
     val retrofitClient = Retrofit.Builder()

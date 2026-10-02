@@ -8,38 +8,33 @@ import com.example.mobileappdevelopmentvar8.data.model.Product
 import kotlinx.coroutines.launch
 
 class ProductViewModel : ViewModel() {
-    fun getProduct() {
+    fun getProductAndUpdate(id: Int, updatedProduct: Product) {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.productsApiService.getProduct()
-
+                // Получение продукта ДО редактирования
+                val productBefore = RetrofitClient.productsApiService.getProduct(id)
                 Log.d(
-                    "До редактирования:",
-                    "ID: ${response.id} | " +
-                            "Название: ${response.title} | " +
-                            "Описание: ${response.description} | " +
-                            "Категория: ${response.category} | " +
-                            "Тэги: ${response.tags}"
+                    "ProductLog",
+                    "=== ДО РЕДАКТИРОВАНИЯ === " +
+                            "ID: ${productBefore.id} | " +
+                            "Название: ${productBefore.title} | " +
+                            "Описание: ${productBefore.description} | " +
+                            "Категория: ${productBefore.category} | " +
+                            "Тэги: ${productBefore.tags?.joinToString(", ") ?: ""}"
                 )
-            } catch (e: Exception) {
-                Log.e("RetrofitError", e.message.toString())
-            }
-        }
-    }
 
-    fun updateProduct(product: Product) {
-        viewModelScope.launch {
-            try {
-                val response = RetrofitClient.productsApiService.updateProduct(product)
-
+                // Обновление продукта
+                val productAfter = RetrofitClient.productsApiService.updateProduct(id, updatedProduct)
                 Log.d(
-                    "После редактирования:",
-                    "ID: ${response.id} | " +
-                            "Название: ${response.title} | " +
-                            "Описание: ${response.description} | " +
-                            "Категория: ${response.category} | " +
-                            "Тэги: ${response.tags}"
+                    "ProductLog",
+                    "=== ПОСЛЕ РЕДАКТИРОВАНИЯ === " +
+                            "ID: ${productAfter.id} | " +
+                            "Название: ${productAfter.title} | " +
+                            "Описание: ${productAfter.description} | " +
+                            "Категория: ${productAfter.category} | " +
+                            "Тэги: ${productAfter.tags?.joinToString(", ") ?: ""}"
                 )
+
             } catch (e: Exception) {
                 Log.e("RetrofitError", e.message.toString())
             }

@@ -27,4 +27,37 @@ class UserViewModel : ViewModel() {
             }
         }
     }
+
+    fun getUserAndUpdate(id: Int, updatedUser: User) {
+        viewModelScope.launch {
+            try {
+                // Получение пользователя ДО редактирования
+                val userBefore = RetrofitClient.usersApiService.getUser(id)
+                Log.d(
+                    "UserLog",
+                    "=== ДО РЕДАКТИРОВАНИЯ === " +
+                            "ID: ${userBefore.id} | " +
+                            "Имя: ${userBefore.firstName} | " +
+                            "Фамилия: ${userBefore.lastName} | " +
+                            "Пол: ${userBefore.gender} | " +
+                            "Адрес: ${userBefore.address.address}"
+                )
+
+                // Обновление пользователя
+                val userAfter = RetrofitClient.usersApiService.updateUser(id, updatedUser)
+                Log.d(
+                    "UserLog",
+                    "=== ПОСЛЕ РЕДАКТИРОВАНИЯ === " +
+                            "ID: ${userAfter.id} | " +
+                            "Имя: ${userAfter.firstName} | " +
+                            "Фамилия: ${userAfter.lastName} | " +
+                            "Пол: ${userAfter.gender} | " +
+                            "Адрес: ${userAfter.address.address}"
+                )
+
+            } catch (e: Exception) {
+                Log.e("RetrofitError", e.message.toString())
+            }
+        }
+    }
 }

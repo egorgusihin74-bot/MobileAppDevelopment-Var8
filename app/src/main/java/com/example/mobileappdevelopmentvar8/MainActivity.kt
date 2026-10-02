@@ -15,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobileappdevelopmentvar8.ui.theme.MobileAppDevelopmentVar8Theme
 import com.example.mobileappdevelopmentvar8.ui.viewModel.RecipeDeleteViewModel
+import com.example.mobileappdevelopmentvar8.ui.viewModel.ProductViewModel
+import com.example.mobileappdevelopmentvar8.data.model.Product
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +25,22 @@ class MainActivity : ComponentActivity() {
         setContent {
             MobileAppDevelopmentVar8Theme {
                 val recipeDeleteViewModel: RecipeDeleteViewModel = viewModel()
+                val productViewModel: ProductViewModel = viewModel()
 
                 LaunchedEffect(Unit) {
+                    // 4-я практическая работа: удаление рецепта
                     recipeDeleteViewModel.deleteRecipe()
+
+                    // 3-я практическая работа: редактирование продукта
+                    val productId = 48
+                    val updatedProduct = Product(
+                        id = productId,
+                        title = "Беспроводные наушники SoundWave Pro",
+                        description = "Наушники с активным шумоподавлением, влагозащитой IPX4 и автономностью до 30 часов работы вместе с кейсом",
+                        category = "Аудиотехника",
+                        tags = listOf("Наушники", "bluetooth", "шумоподавление", "беспроводные наушники", "гаджеты")
+                    )
+                    productViewModel.getProductAndUpdate(productId, updatedProduct)
                 }
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
