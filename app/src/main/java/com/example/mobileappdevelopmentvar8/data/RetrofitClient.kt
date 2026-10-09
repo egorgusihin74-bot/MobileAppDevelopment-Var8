@@ -12,7 +12,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Proxy
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 object RetrofitClient {
     val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -28,13 +32,27 @@ object RetrofitClient {
         }
     }
 
+    // TrustManager для игнорирования SSL ошибок (для учебных целей)
+    val trustAllCerts = object : X509TrustManager {
+        override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
+        override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
+        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+    }
+
+    val sslContext = SSLContext.getInstance("SSL")
+    init {
+        sslContext.init(null, arrayOf<TrustManager>(trustAllCerts), java.security.SecureRandom())
+    }
+
     val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .dns(dns)
         //.proxy(proxy)
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
+        .sslSocketFactory(sslContext.socketFactory, trustAllCerts)
+        .hostnameVerifier { _, _ -> true }
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
         .build()
 
     val retrofitClient = Retrofit.Builder()
